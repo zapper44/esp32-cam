@@ -100,7 +100,7 @@ void smtpCallback(SMTP_Status status) {
     struct tm dt;
     for (size_t i=0; i<smtp.sendingResult.size(); i++) {
       SMTP_Result result = smtp.sendingResult.getItem(i);
-      localtime_r(&result.timestamp, &dt);
+      localtime_r(&result.timesstamp, &dt);
       Serial.printf("Message No: %d\n", i + 1);
       Serial.printf("Status: %s\n", result.completed ? "success" : "failed");
       Serial.printf("Date/Time: %d/%d/%d %d:%d:%d\n", dt.tm_year + 1900, dt.tm_mon + 1, dt.tm_mday, dt.tm_hour, dt.tm_min, dt.tm_sec);
@@ -259,8 +259,14 @@ void setup() {
     // Read the value from the EEPROM cache
     EEPROM.get(0, pictureNumber);
     pictureNumber += 1;
+   
+    // reserve space for zero-prefixing the picture number 
+    char buf[8];  // reserve places for string to hold number
+    sprintf(buf, "%06d", pictureNumber); // zero-prefix number into buf
+
     // Path where new picture will be saved in SD Card
-    path += String(pictureNumber) + "_";
+    path += String(buf) + "_"; // zero-prefixed number
+
     // Update the EEPROM cache
     EEPROM.put(0, pictureNumber);
     // And then actually write the modified cache values back to EEPROM

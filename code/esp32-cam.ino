@@ -43,7 +43,7 @@
 #include <EEPROM.h> // EEPROM flash memory
 #include <WiFi.h> // WiFi
 #include "time.h" // Time functions
-// "ESP Mail Client" by Mobizt, tested with v1.1.6
+// "ESP Mail Client" by Mobizt, tested with v1.1.6 (breaks with v1.3.x)
 #include "ESP_Mail_Client.h" // e-Mail
 
 // DEFINES
